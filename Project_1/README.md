@@ -12,6 +12,7 @@ This repository includes the contents of Project 1 for DS 4002.
 ### Usage of the Code
 
 ### Data Dictionary
+
 | Element/Variable Display Name| Description| Data Type| Acceptable Values|                   
 |------------------------------|------------|----------|------------------|
 | ID | Observation number | integer | Any integer 1-5450 |
@@ -20,10 +21,10 @@ This repository includes the contents of Project 1 for DS 4002.
 | AUTHOR | IMDB review author name | character | Any continuous character string (no spaces) |
 | TITLE | Title heading of the review | character | Any character string |
 
-#### Dataset
-https://www.kaggle.com/datasets/darshan1504/imdb-movie-reviews-2021?select=IMDB_Movies_2021.db
+#### [Dataset](https://www.kaggle.com/datasets/darshan1504/imdb-movie-reviews-2021?select=IMDB_Movies_2021.db)
 
 ### Figures
+
 | Figure | Summary |
 |--------|---------|
 | cloud_LOW.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
@@ -45,4 +46,4 @@ https://www.kaggle.com/datasets/darshan1504/imdb-movie-reviews-2021?select=IMDB_
 
 [6] B. Boehmke, “Text Mining: Sentiment Analysis,” UC Business Analytics R Programming Guide, para. 12, 9 Jun, 2016. [Online]. Available: https://uc-r.github.io/sentiment_analysis.
 
-https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_1/DS%204002%20-%20MI1.pdf
+[MI1](https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_1/DS%204002%20-%20MI1.pdf), [MI2](https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_1/DS%204002%20-%20MI2.pdf)
