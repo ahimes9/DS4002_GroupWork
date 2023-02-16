@@ -23,9 +23,10 @@ https://www.kaggle.com/datasets/darshan1504/imdb-movie-reviews-2021?select=IMDB_
 ### Figures
 | Figure | Summary |
 |--------|---------|
-| cloud_LOW | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
-| cloud_MED | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
-| cloud_HIGH | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 8-10). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
+| cloud_LOW.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
+| cloud_MED.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
+| cloud_HIGH.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 8-10). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
+| plot_explore.png | A bar graph displaying the number of reviews for each rating (1-10). The bar graph is color-coded to show the different rating-groups. LOW is green, MEDIUM is blue, HIGH is red. Although there is a significantly larger number of reviews with a rating of 1, the groups are fairly evenly balanced. |
 
 
 ### References
