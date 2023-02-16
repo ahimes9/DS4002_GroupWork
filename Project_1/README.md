@@ -6,7 +6,7 @@
 
 ### Data Dictionary
 | Element/Variable Display Name| Description| Data Type| Acceptable Values|                   
-|-------|------------|-------------------|
+|------------------------------|------------|----------|------------------|
 | ID | Observation number | integer | Any integer 1-5450 |
 | REVIEW | Text review about an IMDB movie | character | Any character string |
 | RATING | Overall numerical rating given by the user | integer | Any integer 1-10 |
