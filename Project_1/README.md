@@ -1,5 +1,6 @@
 # Sea Monsters Project 1
-Group leader: Audrey Himes    Group members: Sharaf Tariq, Alexa Owen
+Group leader: Audrey Himes    
+Group members: Sharaf Tariq, Alexa Owen
 
 DS 4002
 
