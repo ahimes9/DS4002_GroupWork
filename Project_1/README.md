@@ -5,9 +5,11 @@ Group members: Sharaf Tariq, Alexa Owen
 DS 4002
 
 ## Contents
-This repository includes the contents of Project 1 for DS 4002. The "SRC" section and folder contain our source code. The "Data" folder contains the raw data files 
+This repository includes the contents of Project 1 for DS 4002. 
 
-### SRC
+### Installing and Building Code
+
+### Usage of the Code
 
 ### Data Dictionary
 | Element/Variable Display Name| Description| Data Type| Acceptable Values|                   
