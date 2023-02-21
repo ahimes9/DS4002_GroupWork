@@ -1,0 +1,266 @@
+---
+title: "P1 Code"
+author: "Audrey Himes"
+date: "2/9/2023"
+output: html_document
+---
+```{r}
+# loading packages
+library(tidyverse)
+library(tidytext)
+library(ggwordcloud)
+library(gutenbergr)
+library(textdata)
+library(DT)
+library(patchwork)
+```
+
+## EDA
+```{r}
+# reading in the data
+df0 <- read.csv('/Users/alexaowen/Documents/Fourth Year/Spring 2023/DS 4002/Project 1/REVIEWS.csv')
+
+# remove NA values
+df1 <- na.omit(df0)
+
+# keep only relevant variables
+df <- df1[,2:3]
+str(df)
+
+df <- df %>% mutate(GROUP = case_when(RATING < 4 ~ 'LOW',
+  RATING < 8 ~ 'MED',
+  RATING < 11 ~ 'HIGH'))
+
+df$GROUP <- as.factor(df$GROUP)
+str(df)
+```
+
+```{r}
+# categorize each review as low, medium, high based on the rating
+df_LOW <- df %>% filter(RATING == 2 | RATING == 1 | RATING == 3)
+df_MED <- df %>% filter(RATING == 4 | RATING == 5 | RATING ==6 | RATING ==7)
+df_HIGH <- df %>% filter(RATING == 8 | RATING == 9 | RATING ==10)
+
+table(df$GROUP)
+```
+
+```{r}
+plot_explore <- ggplot(data=df, aes(x=RATING, color=GROUP, fill=GROUP)) + 
+  geom_bar() +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5)
+plot_explore
+ggsave("plot_explore.png", plot=plot_explore)
+```
+
+## EDA for LOW group
+```{r, warning=FALSE}
+df_LOW1 <- data.frame(df_LOW$REVIEW)
+
+# breaking the review up into individual 'words'
+tidy_LOW_words <- df_LOW1 %>%    
+  unnest_tokens(word, df_LOW.REVIEW) %>%
+  filter(!grepl('[0-9]', word))
+
+# cleaning out all of the 'stop words'
+full_LOW_words <- tidy_LOW_words %>%
+  anti_join(stop_words) %>%
+  # filter(!grepl('movie', word)) %>%
+  # filter(!grepl('film', word)) %>%
+  # filter(!grepl('story', word)) %>%
+  count(word, sort=TRUE) %>%
+  mutate (GROUP = 'LOW')
+
+# data table of word frequencies
+datatable(full_LOW_words)
+
+# making a word cloud
+cloud_LOW <- ggplot(full_LOW_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_LOW
+ggsave("cloud_LOW.png", plot=cloud_LOW)
+```
+
+## EDA for MED group
+```{r}
+df_MED1 <- data.frame(df_MED$REVIEW)
+
+# breaking the review up into individual 'words'
+tidy_MED_words <- df_MED1 %>%    
+  unnest_tokens(word, df_MED.REVIEW) %>%
+  filter(!grepl('[0-9]', word))
+
+# cleaning out all of the 'stop words'
+full_MED_words <- tidy_MED_words %>%
+  anti_join(stop_words) %>%
+  # filter(!grepl('movie', word)) %>%
+  # filter(!grepl('film', word)) %>%
+  # filter(!grepl('story', word)) %>%
+  count(word, sort=TRUE)%>%
+  mutate (GROUP = 'MED')
+
+# data table of word frequencies
+datatable(full_MED_words)
+
+# making a word cloud
+cloud_MED <- ggplot(full_MED_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_MED
+ggsave("cloud_MED.png", plot=cloud_MED)
+```
+
+## EDA for HIGH group
+```{r}
+df_HIGH1 <- data.frame(df_HIGH$REVIEW)
+
+# breaking the review up into individual 'words'
+tidy_HIGH_words <- df_HIGH1 %>%    
+  unnest_tokens(word, df_HIGH.REVIEW) %>%
+  filter(!grepl('[0-9]', word))
+
+# cleaning out all of the 'stop words'
+full_HIGH_words <- tidy_HIGH_words %>%
+  anti_join(stop_words) %>%
+  # filter(!grepl('movie', word)) %>%
+  # filter(!grepl('film', word)) %>%
+  # filter(!grepl('story', word)) %>%
+  count(word, sort=TRUE)%>%
+  mutate (GROUP = 'HIGH')
+
+# data table of word frequencies
+datatable(full_HIGH_words)
+
+# making a word cloud
+cloud_HIGH <- ggplot(full_HIGH_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_HIGH
+ggsave("cloud_HIGH.png", plot=cloud_HIGH)
+```
+
+##AFINN Analysis: Low Group
+```{r}
+LOW_affin <- full_LOW_words %>%
+  inner_join(get_sentiments("afinn"))
+LOW_affin
+
+#did weighted mean because each word was used a different number of times
+wml <- weighted.mean(LOW_affin$value, LOW_affin$n)
+sdl <- sd (LOW_affin$value)
+sl <- sum (LOW_affin$value)
+
+#0 is empty because it would just include words with no sentiment making it unnecessary 
+ggplot (LOW_affin, aes (x = `value`)) +
+  geom_bar(aes (fill = "blue")) + 
+  theme_minimal() + 
+  scale_x_discrete(limit = c(-5:5)) +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  theme (legend.position = "none") +
+  labs (x = 'AFINN Rating', y = 'Count', title = 'Count for Each Ranking from Low Group AFINN Analysis')
+
+```
+
+## AFINN Analysis: Medium Group
+```{r}
+MED_affin <- full_MED_words %>%
+  inner_join(get_sentiments("afinn"))
+MED_affin
+
+wmm <- weighted.mean(MED_affin$value, MED_affin$n)
+sdm <- sd (MED_affin$value)
+sm <- sum (MED_affin$value)
+
+ggplot (MED_affin, aes (x = `value`)) +
+  geom_bar(aes (fill = "blue")) + 
+  theme_minimal() + 
+  scale_x_discrete(limit = c(-5:5)) +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  theme (legend.position = "none") +
+  labs (x = 'AFINN Rating', y = 'Count', title = 'Count for Each Ranking from Medium Group AFINN Analysis')
+```
+
+##AFINN Analysis: High Group
+```{r}
+HIGH_affin <- full_HIGH_words %>%
+  inner_join(get_sentiments("afinn"))
+HIGH_affin
+
+wmh <- weighted.mean(HIGH_affin$value, HIGH_affin$n)
+sdh <- sd(HIGH_affin$value)
+sh <- sum (HIGH_affin$value)
+
+ggplot (HIGH_affin, aes (x = `value`)) +
+  geom_bar (aes (fill = "blue")) + 
+  theme_minimal() + 
+  scale_x_discrete(limit = c(-5:5)) +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  theme (legend.position = "none") +
+  labs (x = 'AFINN Rating', y = 'Count', title = 'Count for Each Ranking from High Group AFINN Analysis')
+```
+
+```{r}
+results_1 <- cbind (wml, sdl, sl)
+results_2 <- cbind (wmm, sdm, sm)
+results_3 <- cbind (wmh, sdh, sh)
+results <- rbind(results_1, results_2, results_3)
+colnames(results)<-c("Weighted Mean","Standard Deviation","Sum")
+rownames(results) <- c("Low Group", "Medium Group", "High Group" )
+results
+```
+
+```{r}
+# creating the nrc for low group 
+LOW_nrc <- full_LOW_words %>%
+  inner_join(get_sentiments("nrc"))
+LOW_nrc
+table(LOW_nrc$sentiment)
+
+ggplot(data=LOW_nrc, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from Low Group NRC Analysis')
+```
+
+```{r}
+# creating the nrc for med group 
+MED_nrc <- full_MED_words %>%
+  inner_join(get_sentiments("nrc"))
+MED_nrc
+table(MED_nrc$sentiment)
+
+ggplot(data=MED_nrc, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from Medium Group NRC Analysis')
+```
+
+```{r}
+# creating the nrc for high group 
+HIGH_nrc <- full_HIGH_words %>%
+  inner_join(get_sentiments("nrc"))
+HIGH_nrc
+table(HIGH_nrc$sentiment)
+
+ggplot(data=HIGH_nrc, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from High Group NRC Analysis')
+```
+
+```{r}
+nrc_merge <- merge(LOW_nrc, MED_nrc) %>%
+              merge(HIGH_affin)
+nrc_merge
+ggplot(data=nrc_merge, aes(x=sentiment, fill = 'GROUP')) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from High Group NRC Analysis')
+```
