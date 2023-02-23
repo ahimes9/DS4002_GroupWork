@@ -8,8 +8,21 @@ DS 4002
 This repository includes the contents of Project 1 for DS 4002. 
 
 ### Installing and Building Code
+Open code in R Studio
+
+Click the "broom" button to clear memory if there are memory issues.
+
+Packages:
+```markdown
+library(tidyverse)
+library(tidytext)
+library(ggworld)
+library(DT)
+library(textdata)
+```
 
 ### Usage of the Code
+Load data into R Studio and execute the code chunk-by-chunk.
 
 ### Data Dictionary
 
