@@ -1,0 +1,472 @@
+---
+title: "P1 Code"
+author: "Audrey Himes, Alexa Owen, Sharaf Tariq"
+date: "2/24/2023"
+output: html_document
+---
+```{r}
+# loading packages
+library(tidyverse)
+library(tidytext)
+library(ggwordcloud)
+library(textdata)
+library(DT)
+library(syuzhet)
+```
+
+## Initial EDA
+```{r}
+# reading in the data
+df <- read.csv('/Users/audreyhimes/Documents/UVA SP23/DS-4002/DS4002_GroupWork/Project_1/Data/REVIEWS.csv')
+
+# remove NA values
+df <- na.omit(df)
+
+# keep only relevant variables
+df <- df[,2:3]
+str(df)
+
+df <- df %>% mutate(GROUP = case_when(RATING < 4 ~ 'LOW',
+  RATING < 8 ~ 'MED',
+  RATING < 11 ~ 'HIGH'))
+
+df$GROUP <- as.factor(df$GROUP)
+str(df)
+```
+
+### Categorizing the Data 
+```{r}
+# categorize each review as low, medium, high based on the rating
+df_LOW <- df %>% filter(RATING == 2 | RATING == 1 | RATING == 3)
+df_MED <- df %>% filter(RATING == 4 | RATING == 5 | RATING ==6 | RATING ==7)
+df_HIGH <- df %>% filter(RATING == 8 | RATING == 9 | RATING ==10)
+
+table(df$GROUP)
+```
+
+### Plot of Ratings by Group
+```{r}
+df$GROUP <- factor(df$GROUP, levels = c("HIGH", "MED", "LOW"))
+
+plot_explore <- ggplot(data=df, aes(x=RATING, color=GROUP, fill=GROUP)) + 
+  geom_bar() +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5)
+plot_explore
+# ggsave("plot_explore.png", plot=plot_explore)
+```
+
+## EDA by Rating Group
+
+### EDA for LOW group
+```{r, warning=FALSE}
+df_LOW1 <- data.frame(df_LOW$REVIEW)
+
+# breaking the review up into individual 'words'
+tidy_LOW_words <- df_LOW1 %>%    
+  unnest_tokens(word, df_LOW.REVIEW) %>%
+  filter(!grepl('[0-9]', word))
+
+# cleaning out all of the 'stop words'
+full_LOW_words <- tidy_LOW_words %>%
+  anti_join(stop_words) %>%
+  # filter(!grepl('movie', word)) %>%
+  # filter(!grepl('film', word)) %>%
+  # filter(!grepl('story', word)) %>%
+  count(word, sort=TRUE) %>%
+  mutate (GROUP = 'LOW')
+
+# data table of word frequencies
+datatable(full_LOW_words)
+
+# making a word cloud
+cloud_LOW <- ggplot(full_LOW_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_LOW
+# ggsave("cloud_LOW.png", plot=cloud_LOW)
+```
+
+```{r}
+# word cloud without "movie", "film", and "story"
+clean_LOW_words <- full_LOW_words %>%
+  filter(!grepl('movie', word)) %>%
+  filter(!grepl('film', word)) %>%
+  filter(!grepl('story', word)) %>%
+  # count(word, sort=TRUE) %>%
+  mutate (GROUP = 'LOW')
+
+# data table of word frequencies
+datatable(clean_LOW_words)
+
+# making a clean word cloud
+cloud_LOW_clean <- ggplot(clean_LOW_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_LOW_clean
+```
+
+### EDA for MED group
+```{r}
+df_MED1 <- data.frame(df_MED$REVIEW)
+
+# breaking the review up into individual 'words'
+tidy_MED_words <- df_MED1 %>%    
+  unnest_tokens(word, df_MED.REVIEW) %>%
+  filter(!grepl('[0-9]', word))
+
+# cleaning out all of the 'stop words'
+full_MED_words <- tidy_MED_words %>%
+  anti_join(stop_words) %>%
+  # filter(!grepl('movie', word)) %>%
+  # filter(!grepl('film', word)) %>%
+  # filter(!grepl('story', word)) %>%
+  count(word, sort=TRUE)%>%
+  mutate (GROUP = 'MED')
+
+# data table of word frequencies
+datatable(full_MED_words)
+
+# making a word cloud
+cloud_MED <- ggplot(full_MED_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_MED
+# ggsave("cloud_MED.png", plot=cloud_MED)
+```
+
+```{r}
+# word cloud without "movie", "film", and "story"
+clean_MED_words <- full_MED_words %>%
+  filter(!grepl('movie', word)) %>%
+  filter(!grepl('film', word)) %>%
+  filter(!grepl('story', word)) %>%
+  # count(word, sort=TRUE) %>%
+  mutate (GROUP = 'MED')
+
+# data table of word frequencies
+datatable(clean_MED_words)
+
+# making a clean word cloud
+cloud_MED_clean <- ggplot(clean_MED_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=9) +
+  theme_minimal()
+cloud_MED_clean
+```
+
+
+### EDA for HIGH group
+```{r}
+df_HIGH1 <- data.frame(df_HIGH$REVIEW)
+
+# breaking the review up into individual 'words'
+tidy_HIGH_words <- df_HIGH1 %>%    
+  unnest_tokens(word, df_HIGH.REVIEW) %>%
+  filter(!grepl('[0-9]', word))
+
+# cleaning out all of the 'stop words'
+full_HIGH_words <- tidy_HIGH_words %>%
+  anti_join(stop_words) %>%
+  # filter(!grepl('movie', word)) %>%
+  # filter(!grepl('film', word)) %>%
+  # filter(!grepl('story', word)) %>%
+  count(word, sort=TRUE)%>%
+  mutate (GROUP = 'HIGH')
+
+# data table of word frequencies
+datatable(full_HIGH_words)
+
+# making a word cloud
+cloud_HIGH <- ggplot(full_HIGH_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=10) +
+  theme_minimal()
+cloud_HIGH
+# ggsave("cloud_HIGH.png", plot=cloud_HIGH)
+```
+
+```{r}
+# word cloud without "movie", "film", and "story"
+clean_HIGH_words <- full_HIGH_words %>%
+  filter(!grepl('movie', word)) %>%
+  filter(!grepl('film', word)) %>%
+  filter(!grepl('story', word)) %>%
+  # count(word, sort=TRUE) %>%
+  mutate (GROUP = 'HIGH')
+
+# data table of word frequencies
+datatable(clean_HIGH_words)
+
+# making a clean word cloud
+cloud_HIGH_clean <- ggplot(clean_HIGH_words[1:50,], aes(label = word, size = n)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size=9) +
+  theme_minimal()
+cloud_HIGH_clean
+```
+
+## AFINN Analysis
+
+### AFINN Analysis: Low Group
+```{r}
+LOW_afinn <- full_LOW_words %>%
+  inner_join(get_sentiments("afinn"))
+LOW_afinn
+
+#did weighted mean because each word was used a different number of times
+wml <- weighted.mean(LOW_afinn$value, LOW_afinn$n)
+sdl <- sd (LOW_afinn$value)
+sl <- sum (LOW_afinn$value)
+
+#0 is empty because it would just include words with no sentiment making it unnecessary 
+ggplot (LOW_afinn, aes (x = `value`)) +
+  geom_bar(aes (fill = "blue")) + 
+  theme_minimal() + 
+  scale_x_discrete(limit = c(-5:5)) +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  theme (legend.position = "none") +
+  labs (x = 'AFINN Rating', y = 'Count', title = 'Count for Each Ranking from Low Group AFINN Analysis')
+
+```
+
+### AFINN Analysis: Medium Group
+```{r}
+MED_afinn <- full_MED_words %>%
+  inner_join(get_sentiments("afinn"))
+MED_afinn
+
+wmm <- weighted.mean(MED_afinn$value, MED_afinn$n)
+sdm <- sd (MED_afinn$value)
+sm <- sum (MED_afinn$value)
+
+ggplot (MED_afinn, aes (x = `value`)) +
+  geom_bar(aes (fill = "blue")) + 
+  theme_minimal() + 
+  scale_x_discrete(limit = c(-5:5)) +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  theme (legend.position = "none") +
+  labs (x = 'AFINN Rating', y = 'Count', title = 'Count for Each Ranking from Medium Group AFINN Analysis')
+```
+
+### AFINN Analysis: High Group
+```{r}
+HIGH_afinn <- full_HIGH_words %>%
+  inner_join(get_sentiments("afinn"))
+HIGH_afinn
+
+wmh <- weighted.mean(HIGH_afinn$value, HIGH_afinn$n)
+sdh <- sd(HIGH_afinn$value)
+sh <- sum (HIGH_afinn$value)
+
+ggplot (HIGH_afinn, aes (x = `value`)) +
+  geom_bar (aes (fill = "blue")) + 
+  theme_minimal() + 
+  scale_x_discrete(limit = c(-5:5)) +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  theme (legend.position = "none") +
+  labs (x = 'AFINN Rating', y = 'Count', title = 'Count for Each Ranking from High Group AFINN Analysis')
+```
+
+### AFINN Results Table 
+```{r}
+afinn_results_1 <- cbind (wml, sdl, sl)
+afinn_results_2 <- cbind (wmm, sdm, sm)
+afinn_results_3 <- cbind (wmh, sdh, sh)
+afinn_results <- rbind(afinn_results_1, afinn_results_2, afinn_results_3)
+colnames(afinn_results)<-c("Weighted Mean","Standard Deviation","Sum")
+rownames(afinn_results) <- c("Low Group", "Medium Group", "High Group" )
+afinn_results
+```
+
+### AFINN Analysis Counts Plot
+```{r}
+afinn_BIG <- rbind(LOW_afinn, MED_afinn, HIGH_afinn)
+afinn_BIG
+
+afinn_BIG$GROUP <- factor(afinn_BIG$GROUP, levels = c("HIGH", "MED", "LOW"))
+
+ggplot(data=afinn_BIG, aes(x= value, fill = GROUP)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(if_else (condition = count>23,
+                              as.character(count),""))), position = position_stack(vjust = .5)) +
+  labs (x = 'AFINN Analysis Rankings', y = 'Count', title = 'Comparing AFINN Analysis Ranking Counts')
+```
+
+## NRC Analysis
+
+### NRC Analysis: Low Group
+```{r}
+# creating the nrc for low group 
+LOW_nrc <- full_LOW_words %>%
+  inner_join(get_sentiments("nrc"))
+LOW_nrc
+table(LOW_nrc$sentiment)
+
+LOW_nrc$sentiment <- factor(LOW_nrc$sentiment, levels = c("anger", "disgust", "fear", "sadness", "negative", "positive", "anticipation", "joy", "surprise", "trust"))
+
+ggplot(data=LOW_nrc, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from Low Group NRC Analysis')
+```
+
+### NRC Analysis: Medium Group
+```{r}
+# creating the nrc for med group 
+MED_nrc <- full_MED_words %>%
+  inner_join(get_sentiments("nrc"))
+MED_nrc
+table(MED_nrc$sentiment)
+
+MED_nrc$sentiment <- factor(MED_nrc$sentiment, levels = c("anger", "disgust", "fear", "sadness", "negative", "positive", "anticipation", "joy", "surprise", "trust"))
+
+ggplot(data=MED_nrc, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from Medium Group NRC Analysis')
+```
+
+### NRC Analysis: High Group
+```{r}
+# creating the nrc for high group 
+HIGH_nrc <- full_HIGH_words %>%
+  inner_join(get_sentiments("nrc"))
+HIGH_nrc
+table(HIGH_nrc$sentiment)
+
+HIGH_nrc$sentiment <- factor(HIGH_nrc$sentiment, levels = c("anger", "disgust", "fear", "sadness", "negative", "positive", "anticipation", "joy", "surprise", "trust"))
+
+ggplot(data=HIGH_nrc, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Count for Each Sentiment Grouping from High Group NRC Analysis')
+```
+
+### NRC Analysis Counts Plot
+```{r}
+nrc_BIG <- rbind(LOW_nrc, MED_nrc, HIGH_nrc)
+nrc_BIG
+
+nrc_BIG$GROUP <- factor(nrc_BIG$GROUP, levels = c("HIGH", "MED", "LOW"))
+nrc_BIG$sentiment <- factor(nrc_BIG$sentiment, levels = c("anger", "disgust", "fear", "sadness", "negative", "positive", "anticipation", "joy", "surprise", "trust"))
+
+ggplot(data=nrc_BIG, aes(x=sentiment, fill = GROUP)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), position = position_stack(vjust = 0.5)) +
+  labs (x = 'NRC Sentiment', y = 'Count', title = 'Comparing NRC Analysis Counts') +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
+```
+
+## Bing Analysis
+
+### Bing Analysis: Low Group
+```{r}
+LOW_bing <- full_LOW_words %>%
+  inner_join(get_sentiments("bing"))
+LOW_bing
+
+table(LOW_bing$sentiment)
+
+ggplot(data=LOW_bing, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'Bing Sentiment', y = 'Count', title = 'Count for Each Sentiment from Low Group Bing Analysis')
+```
+
+### Bing Analysis: Medium Group
+```{r}
+MED_bing <- full_MED_words %>%
+  inner_join(get_sentiments("bing"))
+MED_bing
+
+table(MED_bing$sentiment)
+
+ggplot(data=MED_bing, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'Bing Sentiment', y = 'Count', title = 'Count for Each Sentiment from Medium Group Bing Analysis')
+```
+
+### Bing Analysis: High Group
+```{r}
+HIGH_bing <- full_HIGH_words %>%
+  inner_join(get_sentiments("bing"))
+HIGH_bing
+
+table(HIGH_bing$sentiment)
+
+ggplot(data=HIGH_bing, aes(x=sentiment)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  labs (x = 'Bing Sentiment', y = 'Count', title = 'Count for Each Sentiment from High Group Bing Analysis')
+```
+
+### Bing Analysis Counts Plot
+```{r}
+bing_BIG <- rbind(LOW_bing, MED_bing, HIGH_bing)
+bing_BIG
+
+bing_BIG$GROUP <- factor(bing_BIG$GROUP, levels = c("HIGH", "MED", "LOW"))
+
+ggplot(data=bing_BIG, aes(x=sentiment, fill = GROUP)) +
+  geom_bar() +
+  theme_minimal()  +
+  geom_text(stat='count', aes(label=after_stat(count)), position = position_stack(vjust = 0.5)) +
+  labs (x = 'Bing Sentiment', y = 'Count', title = 'Comparing Bing Analysis Counts')
+```
+
+## Sentiment values and vectors
+```{r}
+vector_LOW_afinn <- get_sentiment(full_LOW_words$word, method = "afinn")
+vector_LOW_nrc <- get_sentiment(full_LOW_words$word, method = "nrc")
+vector_LOW_bing <- get_sentiment(full_LOW_words$word, method = "bing")
+
+sentiments_LOW <- data.frame(vector_LOW_afinn, vector_LOW_nrc, vector_LOW_bing)
+sentiments_LOW
+
+as.vector(c(mean(sentiments_LOW$vector_LOW_afinn), mean(sentiments_LOW$vector_LOW_nrc), mean(sentiments_LOW$vector_LOW_bing)))
+```
+
+```{r}
+vector_MED_afinn <- get_sentiment(full_MED_words$word, method = "afinn")
+vector_MED_nrc <- get_sentiment(full_MED_words$word, method = "nrc")
+vector_MED_bing <- get_sentiment(full_MED_words$word, method = "bing")
+
+sentiments_MED <- data.frame(vector_MED_afinn, vector_MED_nrc, vector_MED_bing)
+sentiments_MED
+```
+
+```{r}
+vector_HIGH_afinn <- get_sentiment(full_HIGH_words$word, method = "afinn")
+vector_HIGH_nrc <- get_sentiment(full_HIGH_words$word, method = "nrc")
+vector_HIGH_bing <- get_sentiment(full_HIGH_words$word, method = "bing")
+
+sentiments_HIGH <- data.frame(vector_HIGH_afinn, vector_HIGH_nrc, vector_HIGH_bing)
+sentiments_HIGH
+```
+
+```{r}
+LOW_total_vector <- as.vector(c(mean(sentiments_LOW$vector_LOW_afinn), mean(sentiments_LOW$vector_LOW_nrc), mean(sentiments_LOW$vector_LOW_bing))) 
+
+MED_total_vector <- as.vector(c(mean(sentiments_MED$vector_MED_afinn), mean(sentiments_MED$vector_MED_nrc), mean(sentiments_MED$vector_MED_bing)))
+
+HIGH_total_vector <- as.vector(c(mean(sentiments_HIGH$vector_HIGH_afinn), mean(sentiments_HIGH$vector_HIGH_nrc), mean(sentiments_HIGH$vector_HIGH_bing)))
+
+values_TOTAL <- data.frame(LOW_total_vector, MED_total_vector, HIGH_total_vector)
+rownames(values_TOTAL) <- c("AFINN Score", "NRC Score", "BING Score")
+
+values_TOTAL$Percent_Change <- abs(((values_TOTAL$HIGH_total_vector - values_TOTAL$LOW_total_vector) / values_TOTAL$LOW_total_vector)) * 100
+values_TOTAL
+```
+
