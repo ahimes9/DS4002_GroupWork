@@ -16,9 +16,10 @@ Packages:
 ```markdown
 library(tidyverse)
 library(tidytext)
-library(ggworld)
+library(ggwordcloud)
 library(DT)
 library(textdata)
+library(syuzhet)
 ```
 
 ### Usage of the Code
