@@ -48,7 +48,9 @@ Load data into R Studio and execute the code chunk-by-chunk.
 | cloud_LOW_clean.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "bad", "time", and "acting". |
 | cloud_MED_clean.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "time", "characters", and "watch". |
 | cloud_HIGH_clean.png | An image of a word cloud for the most prevalent words in the HIGH dataset (ratings of 8-10). The most common words are "watch", "time", and "people". |
-
+| plot_afinn_TOTAL.png | A stacked bar graph displaying counts of the afinn method scores for words within reviews in the LOW, MEDIUM, and HIGH groups. Words with no sentiment (a score of 0) are excluded from the figure. |
+| plot_nrc_TOTAL.png | A stacked bar graph displaying counts of the nrc method sentiments for words within reviews in the LOW, MEDIUM, and HIGH groups. Negative sentiments are on the left and positive sentiments are on the right. |
+| plot_bing_TOTAL.png | A stacked bar graph displaying counts of the bing method of sorting for words within reviews in the LOW, MEDIUM, and HIGH groups. Words are plainly categorized as either positive or negative. |
 
 ### References
 [1] S. Renshaw, “Reflections on 30 years of film criticism”, Salt Lake City Weekly, para. 5, Feb. 8, 2023. [Online], Available: https://www.cityweekly.net/utah/reflections-on-30-years-of-film-criticism/Content?oid=19549447. [Accessed Feb. 9, 2023] 
