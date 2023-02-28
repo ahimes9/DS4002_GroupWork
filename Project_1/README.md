@@ -41,10 +41,13 @@ Load data into R Studio and execute the code chunk-by-chunk.
 
 | Figure | Summary |
 |--------|---------|
-| cloud_LOW.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
-| cloud_MED.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
-| cloud_HIGH.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 8-10). The most common words are "movie", "story", and "film". These will be removed to provide a more accurate sentiment analysis. |
+| cloud_LOW.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "movie", "story", and "film". |
+| cloud_MED.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "movie", "story", and "film". |
+| cloud_HIGH.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 8-10). The most common words are "movie", "story", and "film". |
 | plot_explore.png | A bar graph displaying the number of reviews for each rating (1-10). The bar graph is color-coded to show the different rating groups. LOW is green, MEDIUM is blue, HIGH is red. Although there is a significantly larger number of reviews with a rating of 1, the groups are fairly evenly balanced. |
+| cloud_LOW_clean.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "bad", "time", and "acting". |
+| cloud_MED_clean.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "time", "characters", and "watch". |
+| cloud_HIGH_clean.png | An image of a word cloud for the most prevalent words in the HIGH dataset (ratings of 8-10). The most common words are "watch", "time", and "people". |
 
 
 ### References
