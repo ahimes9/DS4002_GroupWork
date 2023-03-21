@@ -5,6 +5,8 @@ Collaborative space for Project 1, Project 2, &amp; Project 3
 
 Folder contains data, figures, and code analysis for our first project relating to text data.
 
-## Project 2
+## Project 2: Image Data
+
+Folder contains data, figures, and code analysis for our second project relating to image data.
 
 ## Project 3
