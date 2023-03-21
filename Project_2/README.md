@@ -1,4 +1,4 @@
-# Sea Monsters Project 1
+# Sea Monsters Project 2
 Group leader: Sharaf Tariq    
 Group members: Audrey Himes, Alexa Owen
 
