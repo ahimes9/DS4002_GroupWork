@@ -12,7 +12,16 @@ This repository includes the contents of Project 2 for DS 4002.
 
 Packages:
 ```
-hksdjnd
+import glob
+import zipfile
+import matplotlib.pyplot as plt
+import numpy as np
+import PIL
+import tensorflow as tf
+
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.models import Sequential
 
 ```
 
