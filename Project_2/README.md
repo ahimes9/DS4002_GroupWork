@@ -22,11 +22,10 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
-
 ```
 
 ### Usage of the Code
-
+Load data into a Jupyter Notebook and execute the code chunk-by-chunk.
 
 ### Data Dictionary
 
