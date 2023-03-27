@@ -9,6 +9,7 @@ This repository includes the contents of Project 2 for DS 4002.
 
 ### Installing and Building Code
 
+Open code in Jupyter Notebook
 
 Packages:
 ```
@@ -22,6 +23,12 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
+```
+After importing all packages:
+
+```
+
+files = glob.glob('/Users/"USERNAME"/Downloads/archive.zip') #input own username of computer user
 ```
 
 ### Usage of the Code
