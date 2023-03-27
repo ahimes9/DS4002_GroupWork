@@ -43,16 +43,11 @@ Load data into a Jupyter Notebook and execute the code chunk-by-chunk.
 
 | Figure | Summary |
 |--------|---------|
-| cloud_LOW.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "movie", "story", and "film". |
-| cloud_MED.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "movie", "story", and "film". |
-| cloud_HIGH.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 8-10). The most common words are "movie", "story", and "film". |
-| plot_explore.png | A bar graph displaying the number of reviews for each rating (1-10). The bar graph is color-coded to show the different rating groups. LOW is green, MEDIUM is blue, HIGH is red. Although there is a significantly larger number of reviews with a rating of 1, the groups are fairly evenly balanced. |
-| cloud_LOW_clean.png | An image of a word cloud for the most prevalent words in the LOW dataset (ratings of 1-3). The most common words are "bad", "time", and "acting". |
-| cloud_MED_clean.png | An image of a word cloud for the most prevalent words in the MEDIUM dataset (ratings of 4-7). The most common words are "time", "characters", and "watch". |
-| cloud_HIGH_clean.png | An image of a word cloud for the most prevalent words in the HIGH dataset (ratings of 8-10). The most common words are "watch", "time", and "people". |
-| plot_afinn_TOTAL.png | A stacked bar graph displaying counts of the afinn method scores for words within reviews in the LOW, MEDIUM, and HIGH groups. Words with no sentiment (a score of 0) are excluded from the figure. |
-| plot_nrc_TOTAL.png | A stacked bar graph displaying counts of the nrc method sentiments for words within reviews in the LOW, MEDIUM, and HIGH groups. Negative sentiments are on the left and positive sentiments are on the right. |
-| plot_bing_TOTAL.png | A stacked bar graph displaying counts of the bing method of sorting for words within reviews in the LOW, MEDIUM, and HIGH groups. Words are plainly categorized as either positive or negative. |
+| Model A Figure 1.png | A line graph showing the training (blue line) and validation (orange line) accuracy for the model that does not account for overfitting. |
+| Model A Figure 2.png | A line graph showing the training (blue line) and validation (orange line) loss for the model that does not account for overfitting. |
+| Model B Figure 1.png | A line graph showing the training (blue line) and validation (orange line) accuracy for the model that does account for overfitting. |
+| Model B Figure 2.png | A line graph showing the training (blue line) and validation (orange line) loss for the model that does account for overfitting. |
+
 
 ### References
 [1] R. Kestenbaum, “The Pandemic Has Forever Changed The Active Outdoor Business,” Forbes, para. 1 & 2, Aug. 18, 2021. [Online]. Available: https://www.forbes.com. [Accessed Mar. 16, 2023].
