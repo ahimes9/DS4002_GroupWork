@@ -84,4 +84,4 @@ Load data into a Jupyter Notebook and execute the code chunk-by-chunk.
 
 [7] Center for International Forestry Research, “Energy From Forests: Pongamia pinnata,” CIFOR-ICRAF, 2023. [Online]. Available: https://www.cifor.org/feature/energy-from-forests/millettia-pongamia-pinnata/. [Accessed Mar. 16, 2023].  
 
-[MI1](https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_2/Project%202%20MI1.pdf), [MI2](https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_2/Project%202%20MI2.pdf)
+[MI1](https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_3/Project%203%20MI1.pdf, [MI2](https://github.com/ahimes9/DS4002_GroupWork/blob/main/Project_3/Project%203%20MI2.pdf)
