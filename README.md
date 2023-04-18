@@ -10,3 +10,5 @@ Collaborative space for Project 1, Project 2, &amp; Project 3
 "Project_2" folder contains data, figures, and code analysis for our second project relating to image data.
 
 ## Project 3
+
+"Project_3" folder contains data, figures, and code analysis for our third project relating to time series data.
