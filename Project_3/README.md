@@ -58,7 +58,7 @@ Load data into a Jupyter Notebook and execute the code chunk-by-chunk.
 | LandMaxTemperatureUncertainty | 95% confidence interval for LandMaxTemperature | Integer |
 
 
-#### [Dataset]([https://www.kaggle.com/datasets/csafrit2/plant-leaves-for-image-classification](https://data.world/data-society/global-climate-change-data))
+#### [Dataset](https://data.world/data-society/global-climate-change-data/discuss/global-climate-change-data/gntggylf)
 
 ### Figures
 
