@@ -1,0 +1,101 @@
+---
+title: "Project3_Code1"
+author: "Audrey Himes"
+date: "4/11/2023"
+output: html_document
+---
+
+## Setup
+
+```{r}
+library(ggplot2)
+library(lubridate)
+library(tidyverse)
+library(plotly)
+```
+
+```{r}
+data_dirty <- read.csv('/Users/audreyhimes/Documents/UVA SP23/DS-4002/GlobalLandTemperatures_GlobalTemperatures.csv')
+```
+
+```{r}
+# cleaning the data
+
+data <- na.omit(data_dirty)
+data$dt <- ymd(data$dt)
+str(data)
+
+data$month<- as.factor(month(ymd(data$dt)))
+```
+
+```{r}
+subs1 <- data %>% filter(dt >= '1850-01-01' & dt < '1900-01-01')
+subs2 <- data %>% filter(dt >= '1900-01-01' & dt < '1950-01-01')
+subs3 <- data %>% filter(dt >= '1950-01-01' & dt < '2000-01-01')
+subs4 <- data %>% filter(dt >= '2000-01-01')
+```
+
+## EDA
+```{r}
+plot1 <- ggplot(data = data, aes(x = dt, y = LandAverageTemperature)) + ylim(0,17) + geom_line() + ggtitle('Average Temps from 1850-2015')
+
+plot1
+ggsave("plot1.png")
+
+```
+how can we make this look cleaner?
+
+```{r}
+ggplot(data = data, aes(x = dt, y = LandAverageTemperature, color = month)) + ylim(0,17) + geom_point() + ggtitle('Average Temps from 1850-2015 (monthly trends)')
+```
+
+```{r}
+jan <- data %>% filter(month == '1')
+
+
+ggplot(data = jan, aes(x = dt, y = LandAverageTemperature)) + geom_point() + geom_smooth(se=FALSE) + ggtitle('Average January Temps from 1850-2015 (monthly trends)')
+```
+
+```{r}
+july <- data %>% filter(month == '7')
+
+ggplot(data = july, aes(x = dt, y = LandAverageTemperature)) + geom_point() + geom_smooth( se=FALSE) + ggtitle('Average July Temps from 1850-2015 (monthly trends)')
+```
+
+1850-1899:
+```{r}
+plot2 <- ggplot(data = subs1, aes(x = dt, y = LandAverageTemperature)) +
+  geom_line() + ggtitle("Average Temps from 1850-1899")
+
+# ggsave('plot2.png')
+ggplotly(plot2)
+```
+
+1900-1950:
+```{r}
+plot3 <- ggplot(data = subs2, aes(x = dt, y = LandAverageTemperature)) +
+  geom_line() + ggtitle('Average Temps from 1900-1949')
+
+plot3
+# ggsave('plot3.png')
+ggplotly(plot3)
+```
+
+```{r}
+plot4 <- ggplot(data = subs3, aes(x = dt, y = LandAverageTemperature)) +
+  geom_line() + ggtitle('Average Temps from 1950-1999')
+
+plot4
+ggsave('plot4.png')
+ggplotly(plot4)
+```
+
+```{r}
+plot5 <- ggplot(data = subs4, aes(x = dt, y = LandAverageTemperature)) +
+  geom_line() + ggtitle('Average Temps from 2000-2015')
+
+plot5
+ggsave('plot5.png')
+ggplotly(plot5)
+```
+
